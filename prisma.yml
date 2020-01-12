@@ -1,4 +1,4 @@
-endpoint: https://us1.prisma.sh/leeb-fd6c7d/instagram_CL/dev
+endpoint: 
 datamodel: datamodel.prisma
 
 generate:
