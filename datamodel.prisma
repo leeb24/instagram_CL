@@ -9,7 +9,8 @@ type User {
   comments:[Comment!]!,
   followers:[User!]! @relation(name:"FollowRelation"),
   following:[User!]! @relation(name:"FollowRelation"),
-  rooms: [Room!]!
+  rooms: [Room!]!,
+  loginSecret:String
 }
 
 type Post {
