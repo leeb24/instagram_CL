@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+import path from "path";
+import nodemailer from "nodemailer"
+import sgTransport from "nodemailer-sendgrid-transport"
+dotenv.config({path:path.resolve(__dirname, '.env')})
+
 export const adjectives = [
 "naive",
 "maniacal",
@@ -1009,4 +1015,25 @@ export const generateSecret= () => {
     const random = Math.floor(Math.random() * adjectives.length)
     console.log(`random number: ${random}`)
     return `${adjectives[random]} ${nouns[random]}`
+}
+
+export const sendMail = (email) => {
+    const options = {
+        auth: {
+            api_user: process.env.SENDGRIDID,
+            api_key: process.env.SENDGRIDPW
+        }
+    }
+    const client = nodemailer.createTransport(sgTransport(options))
+    return client.sendMail(email)
+}
+
+export const sendSecretEmail = (target,secret) => {
+    const email = {
+        from:"support@leeGram.com",
+        to:target,
+        subject:"🔒 Login secret for your account 🔒",
+        html:`Hello! Your login secret code is ${secret}. <br/> Please do not share this code`
+    }
+    return sendMail(email)
 }
